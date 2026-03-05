@@ -9,15 +9,15 @@ import org.springframework.stereotype.Component;
 @RequiredArgsConstructor
 public class AccountMessagingOutputAdapter implements AccountMessagingPort {
 
-    private final RabbitTemplate rabbitTemplate;
+  private final RabbitTemplate rabbitTemplate;
 
-    @Override
-    public Long sendIdReceiveRef(String idNumber) {
-        rabbitTemplate.setReplyTimeout(2000);
-        return (Long) rabbitTemplate.convertSendAndReceive(
+  @Override
+  public Long sendIdReceiveRef(String idNumber) {
+    rabbitTemplate.setReplyTimeout(2000);
+    return (Long) rabbitTemplate.convertSendAndReceive(
             "bank-ntt",
             "account.created",
-                idNumber
-        );
-    }
+            idNumber
+    );
+  }
 }

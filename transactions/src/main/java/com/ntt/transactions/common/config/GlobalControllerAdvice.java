@@ -9,17 +9,17 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 @ControllerAdvice
 public class GlobalControllerAdvice {
 
-    @ExceptionHandler(EntityNotFoundException.class)
-    public ResponseEntity<String> handleBadRequest(EntityNotFoundException ex) {
-        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(
+  @ExceptionHandler(EntityNotFoundException.class)
+  public ResponseEntity<String> handleBadRequest(EntityNotFoundException ex) {
+    return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(
             ex.getMessage()
-        );
-    }
+    );
+  }
 
-    @ExceptionHandler(Exception.class)
-    public ResponseEntity<String> handleGeneral(Exception ex) {
-        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(
+  @ExceptionHandler(Exception.class)
+  public ResponseEntity<String> handleGeneral(Exception ex) {
+    return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(
             "Error interno del servidor"
-        );
-    }
+    );
+  }
 }

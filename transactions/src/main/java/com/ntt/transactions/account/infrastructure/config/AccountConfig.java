@@ -1,6 +1,7 @@
 package com.ntt.transactions.account.infrastructure.config;
 
-import com.ntt.transactions.account.application.port.in.AccountUseCase;
+import com.ntt.transactions.account.application.port.in.AccountDeleteUseCase;
+import com.ntt.transactions.account.application.port.in.AccountSearchUseCase;
 import com.ntt.transactions.account.infrastructure.in.messaging.AccountMessagingInputAdapter;
 import com.ntt.transactions.account.infrastructure.in.messaging.mapper.AccountMessagingInputMapper;
 import com.ntt.transactions.account.infrastructure.out.persistence.AccountRepositoryPersistenceAdapter;
@@ -12,25 +13,27 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class AccountConfig {
 
-    @Bean
-    public AccountRepositoryPersistenceAdapter accountPersistenceAdapter(
-        AccountRepository accountRepository,
-        AccountPersistenceMapper accountPersistenceMapper
-    ) {
-        return new AccountRepositoryPersistenceAdapter(
-                accountRepository,
-                accountPersistenceMapper
-        );
-    }
+  @Bean
+  public AccountRepositoryPersistenceAdapter accountPersistenceAdapter(
+          AccountRepository accountRepository,
+          AccountPersistenceMapper accountPersistenceMapper
+  ) {
+    return new AccountRepositoryPersistenceAdapter(
+            accountRepository,
+            accountPersistenceMapper
+    );
+  }
 
-    @Bean
-    public AccountMessagingInputAdapter accountMessagingInputAdapter(
-        AccountUseCase accountUseCase,
-        AccountMessagingInputMapper accountMessagingInputMapper
-    ) {
-        return new AccountMessagingInputAdapter(
-                accountUseCase,
-                accountMessagingInputMapper
-        );
-    }
+  @Bean
+  public AccountMessagingInputAdapter accountMessagingInputAdapter(
+          AccountSearchUseCase accountSearchUseCase,
+          AccountDeleteUseCase accountDeleteUseCase,
+          AccountMessagingInputMapper accountMessagingInputMapper
+  ) {
+    return new AccountMessagingInputAdapter(
+            accountDeleteUseCase,
+            accountSearchUseCase,
+            accountMessagingInputMapper
+    );
+  }
 }

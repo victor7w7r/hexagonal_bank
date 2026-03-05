@@ -1,9 +1,10 @@
 package com.ntt.transactions.transaction.infrastructure.in.rest.model;
 
 import jakarta.validation.constraints.NotNull;
+import lombok.*;
+
 import java.math.BigDecimal;
 import java.time.LocalDate;
-import lombok.*;
 
 @Builder
 @Getter
@@ -12,14 +13,14 @@ import lombok.*;
 @AllArgsConstructor
 public class TransactionRequest {
 
-    @NotNull
-    private LocalDate date;
+  @NotNull
+  private LocalDate date;
 
-    private String typeTransaction;
+  private String typeTransaction;
 
-    @NotNull
-    private BigDecimal value;
+  @NotNull
+  private BigDecimal value;
 
-    private BigDecimal balance;
-    private String uuid;
+  private BigDecimal balance;
+  private String uuid;
 }

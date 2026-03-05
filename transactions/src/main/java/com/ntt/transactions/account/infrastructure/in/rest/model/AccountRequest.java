@@ -2,9 +2,10 @@ package com.ntt.transactions.account.infrastructure.in.rest.model;
 
 import com.ntt.transactions.transaction.domain.model.Transaction;
 import jakarta.validation.constraints.NotNull;
+import lombok.*;
+
 import java.math.BigDecimal;
 import java.util.List;
-import lombok.*;
 
 @Builder
 @Getter
@@ -13,17 +14,17 @@ import lombok.*;
 @AllArgsConstructor
 public class AccountRequest {
 
-    @NotNull
-    private Long numAccount;
+  @NotNull
+  private Long numAccount;
 
-    @NotNull
-    private String accountType;
+  @NotNull
+  private String accountType;
 
-    @NotNull
-    private BigDecimal initialFunds;
+  @NotNull
+  private BigDecimal initialFunds;
 
-    private Long accountRef;
-    private Boolean status;
+  private Long accountRef;
+  private Boolean status;
 
-    private List<Transaction> transactions;
+  private List<Transaction> transactions;
 }

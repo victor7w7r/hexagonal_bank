@@ -1,7 +1,11 @@
 package com.ntt.clients.infrastructure.in.rest.model;
 
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
 import java.math.BigDecimal;
-import lombok.*;
 
 @Getter
 @Setter

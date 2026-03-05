@@ -1,7 +1,8 @@
 package com.ntt.transactions.account.domain.model;
 
-import java.math.BigDecimal;
 import lombok.*;
+
+import java.math.BigDecimal;
 
 @Builder
 @Getter
@@ -10,12 +11,12 @@ import lombok.*;
 @AllArgsConstructor
 public class StatusAccountReceive {
 
-    private String date;
-    private String client;
-    private Long numAccount;
-    private String accountType;
-    private String typeTransaction;
-    private BigDecimal transactionQuantity;
-    private BigDecimal balance;
-    private BigDecimal actualBalance;
+  private String date;
+  private String client;
+  private Long numAccount;
+  private String accountType;
+  private String typeTransaction;
+  private BigDecimal transactionQuantity;
+  private BigDecimal balance;
+  private BigDecimal actualBalance;
 }

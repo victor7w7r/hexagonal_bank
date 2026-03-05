@@ -1,7 +1,8 @@
 package com.ntt.transactions.account.domain.model;
 
-import java.time.LocalDate;
 import lombok.*;
+
+import java.time.LocalDate;
 
 @Builder
 @Getter
@@ -10,8 +11,8 @@ import lombok.*;
 @AllArgsConstructor
 public class StatusAccountSend {
 
-    private LocalDate startDate;
-    private LocalDate endDate;
-    private Long clientRef;
-    private String nameClient;
+  private LocalDate startDate;
+  private LocalDate endDate;
+  private Long clientRef;
+  private String nameClient;
 }

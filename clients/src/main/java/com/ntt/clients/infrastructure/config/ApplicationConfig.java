@@ -14,32 +14,32 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class ApplicationConfig {
 
-    @Bean
-    public ClientRepositoryPersistenceAdapter clientPersistenceAdapter(
-        ClientRepository clientRepository,
-        ClientPersistenceMapper clientPersistenceMapper
-    ) {
-        return new ClientRepositoryPersistenceAdapter(
+  @Bean
+  public ClientRepositoryPersistenceAdapter clientPersistenceAdapter(
+          ClientRepository clientRepository,
+          ClientPersistenceMapper clientPersistenceMapper
+  ) {
+    return new ClientRepositoryPersistenceAdapter(
             clientRepository,
             clientPersistenceMapper
-        );
-    }
+    );
+  }
 
-    @Bean
-    public ClientMessagingInputAdapter clientMessagingInputAdapter(
-        ClientSearchUseCase clientUseCase
-    ) {
-        return new ClientMessagingInputAdapter(clientUseCase);
-    }
+  @Bean
+  public ClientMessagingInputAdapter clientMessagingInputAdapter(
+          ClientSearchUseCase clientUseCase
+  ) {
+    return new ClientMessagingInputAdapter(clientUseCase);
+  }
 
-    @Bean
-    public ClientMessagingOutputAdapter clientMessagingOutputAdapter(
-        RabbitTemplate rabbitTemplate,
-        ClientMessagingOutputMapper clientMessagingOutputMapper
-    ) {
-        return new ClientMessagingOutputAdapter(
+  @Bean
+  public ClientMessagingOutputAdapter clientMessagingOutputAdapter(
+          RabbitTemplate rabbitTemplate,
+          ClientMessagingOutputMapper clientMessagingOutputMapper
+  ) {
+    return new ClientMessagingOutputAdapter(
             rabbitTemplate,
             clientMessagingOutputMapper
-        );
-    }
+    );
+  }
 }

@@ -9,10 +9,10 @@ import org.springframework.stereotype.Component;
 @RequiredArgsConstructor
 public class ClientMessagingInputAdapter {
 
-    private final ClientSearchUseCase clientSearchUseCase;
+  private final ClientSearchUseCase clientSearchUseCase;
 
-    @RabbitListener(queues = "account_client_queue")
-    public Long sendClientRef(String idNumber) {
-        return clientSearchUseCase.sendClientRef(idNumber);
-    }
+  @RabbitListener(queues = "account_client_queue")
+  public Long sendClientRef(String idNumber) {
+    return clientSearchUseCase.sendClientRef(idNumber);
+  }
 }

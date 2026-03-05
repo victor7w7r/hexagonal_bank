@@ -1,129 +1,133 @@
 package com.ntt.transactions.account.application.service;
 
-import com.ntt.transactions.common.exception.EntityNotFoundException;
-import com.ntt.transactions.account.application.port.in.AccountUseCase;
+import com.ntt.transactions.account.application.port.in.AccountCreateUseCase;
+import com.ntt.transactions.account.application.port.in.AccountDeleteUseCase;
+import com.ntt.transactions.account.application.port.in.AccountSearchUseCase;
+import com.ntt.transactions.account.application.port.in.AccountUpdateUseCase;
 import com.ntt.transactions.account.application.port.out.AccountMessagingPort;
 import com.ntt.transactions.account.application.port.out.AccountRepositoryPort;
 import com.ntt.transactions.account.domain.model.Account;
 import com.ntt.transactions.account.domain.model.StatusAccountReceive;
 import com.ntt.transactions.account.domain.model.StatusAccountSend;
-import java.util.ArrayList;
-import java.util.List;
+import com.ntt.transactions.common.exception.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Service
 @RequiredArgsConstructor
-public class AccountService implements AccountUseCase {
+public class AccountService implements AccountSearchUseCase, AccountCreateUseCase, AccountUpdateUseCase, AccountDeleteUseCase {
 
-    private final AccountRepositoryPort accountRepositoryPort;
-    private final AccountMessagingPort accountMessagingPort;
+  private final AccountRepositoryPort accountRepositoryPort;
+  private final AccountMessagingPort accountMessagingPort;
 
-    @Override
-    public List<Account> findAll() {
-        return accountRepositoryPort.findAll();
-    }
+  @Override
+  public List<Account> findAll() {
+    return accountRepositoryPort.findAll();
+  }
 
-    @Override
-    public void update(Account account) {
-        accountRepositoryPort
+  @Override
+  public void update(Account account) {
+    accountRepositoryPort
             .findByAccountNum(account.getNumAccount())
             .orElseThrow(() ->
-                new EntityNotFoundException("ERROR: Cuenta no encontrada")
+                    new EntityNotFoundException("ERROR: Cuenta no encontrada")
             );
-        accountRepositoryPort.update(account);
-    }
+    accountRepositoryPort.update(account);
+  }
 
-    @Override
-    public void delete(Long numAccount) {
-        accountRepositoryPort
+  @Override
+  public void delete(Long numAccount) {
+    accountRepositoryPort
             .findByAccountNum(numAccount)
             .orElseThrow(() ->
-                new EntityNotFoundException("ERROR: Cuenta no encontrada")
+                    new EntityNotFoundException("ERROR: Cuenta no encontrada")
             );
-        accountRepositoryPort.deleteByNumAccount(numAccount);
-    }
+    accountRepositoryPort.deleteByNumAccount(numAccount);
+  }
 
-    @Override
-    public void save(Account client, String idNumber) {
-        final var accountFound = accountRepositoryPort.findByAccountNum(
+  @Override
+  public void save(Account client, String idNumber) {
+    final var accountFound = accountRepositoryPort.findByAccountNum(
             client.getNumAccount()
-        );
+    );
 
-        if (accountFound.isPresent()) {
-            throw new EntityNotFoundException("ERROR: Esta cuenta ya existe");
-        }
-
-        final var clientRef = accountMessagingPort.sendIdReceiveRef(
-                idNumber
-        );
-
-        if (clientRef == null) {
-            throw new EntityNotFoundException(
-                "ERROR: Cliente con dicha idNumber no encontrado"
-            );
-        }
-
-        if (client.getStatus() == null) {
-            client.setStatus(true);
-        }
-
-        accountRepositoryPort.save(client, clientRef);
+    if (accountFound.isPresent()) {
+      throw new EntityNotFoundException("ERROR: Esta cuenta ya existe");
     }
 
-    @Override
-    public Long deleteByClientRef(Long clientRef) {
-        if (!accountRepositoryPort.findAllByClientRef(clientRef).isEmpty()) {
-            accountRepositoryPort.deleteByClientRef(clientRef);
-        }
-        return 0L;
+    final var clientRef = accountMessagingPort.sendIdReceiveRef(
+            idNumber
+    );
+
+    if (clientRef == null) {
+      throw new EntityNotFoundException(
+              "ERROR: Cliente con dicha idNumber no encontrado"
+      );
     }
 
-    @Override
-    public List<StatusAccountReceive> requestStatusAccount(
-        StatusAccountSend req
-    ) {
-        final var requestData = accountRepositoryPort.findAllByClientRef(
+    if (client.getStatus() == null) {
+      client.setStatus(true);
+    }
+
+    accountRepositoryPort.save(client, clientRef);
+  }
+
+  @Override
+  public Long deleteByClientRef(Long clientRef) {
+    if (!accountRepositoryPort.findAllByClientRef(clientRef).isEmpty()) {
+      accountRepositoryPort.deleteByClientRef(clientRef);
+    }
+    return 0L;
+  }
+
+  @Override
+  public List<StatusAccountReceive> requestStatusAccount(
+          StatusAccountSend req
+  ) {
+    final var requestData = accountRepositoryPort.findAllByClientRef(
             req.getClientRef()
-        );
+    );
 
-        final var response = new ArrayList<StatusAccountReceive>();
+    final var response = new ArrayList<StatusAccountReceive>();
 
-        for (final var account : requestData) {
-            for (final var transaction : account.getTransactionEntities()) {
-                if (
-                    (transaction.getDate().isAfter(req.getStartDate()) ||
+    for (final var account : requestData) {
+      for (final var transaction : account.getTransactionEntities()) {
+        if (
+                (transaction.getDate().isAfter(req.getStartDate()) ||
                         transaction.getDate().isEqual(req.getStartDate())) &&
-                    (transaction.getDate().isBefore(req.getEndDate()) ||
-                        transaction.getDate().isEqual(req.getEndDate()))
-                ) {
-                    final var initialBalance = transaction.getBalance();
-                    final var balanceDiff = initialBalance.add(
-                        transaction.getValue()
-                    );
+                        (transaction.getDate().isBefore(req.getEndDate()) ||
+                                transaction.getDate().isEqual(req.getEndDate()))
+        ) {
+          final var initialBalance = transaction.getBalance();
+          final var balanceDiff = initialBalance.add(
+                  transaction.getValue()
+          );
 
-                    var statusAccount = StatusAccountReceive.builder()
-                        .date(
-                                transaction
-                                .getDate()
-                                .format(
-                                    java.time.format.DateTimeFormatter.ofPattern(
-                                        "dd/MM/yyyy"
-                                    )
-                                )
-                        )
-                        .client(req.getNameClient())
-                        .numAccount(account.getNumAccount())
-                        .accountType(account.getAccountType())
-                        .typeTransaction(transaction.getTypeTransaction())
-                        .transactionQuantity(transaction.getValue())
-                        .balance(transaction.getBalance())
-                        .actualBalance(balanceDiff)
-                        .build();
-                    response.add(statusAccount);
-                }
-            }
+          var statusAccount = StatusAccountReceive.builder()
+                  .date(
+                          transaction
+                                  .getDate()
+                                  .format(
+                                          java.time.format.DateTimeFormatter.ofPattern(
+                                                  "dd/MM/yyyy"
+                                          )
+                                  )
+                  )
+                  .client(req.getNameClient())
+                  .numAccount(account.getNumAccount())
+                  .accountType(account.getAccountType())
+                  .typeTransaction(transaction.getTypeTransaction())
+                  .transactionQuantity(transaction.getValue())
+                  .balance(transaction.getBalance())
+                  .actualBalance(balanceDiff)
+                  .build();
+          response.add(statusAccount);
         }
-        return response;
+      }
     }
+    return response;
+  }
 }

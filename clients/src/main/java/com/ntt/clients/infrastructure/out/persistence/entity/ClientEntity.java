@@ -1,7 +1,10 @@
 package com.ntt.clients.infrastructure.out.persistence.entity;
 
 import jakarta.persistence.Entity;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
 
 @Entity
@@ -11,6 +14,6 @@ import lombok.experimental.SuperBuilder;
 @NoArgsConstructor
 @AllArgsConstructor
 public class ClientEntity extends PersonEntity {
-    private String password;
-    private Boolean status;
+  private String password;
+  private Boolean status;
 }

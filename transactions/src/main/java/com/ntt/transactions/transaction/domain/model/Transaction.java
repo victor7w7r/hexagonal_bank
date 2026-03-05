@@ -1,8 +1,12 @@
 package com.ntt.transactions.transaction.domain.model;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
 import java.math.BigDecimal;
 import java.time.LocalDate;
-import lombok.*;
 
 @Builder
 @Data
@@ -10,10 +14,10 @@ import lombok.*;
 @AllArgsConstructor
 public class Transaction {
 
-    private LocalDate date;
-    private String typeTransaction;
-    private BigDecimal value;
-    private BigDecimal balance;
-    private String uuid;
-    private String accountId;
+  private LocalDate date;
+  private String typeTransaction;
+  private BigDecimal value;
+  private BigDecimal balance;
+  private String uuid;
+  private String accountId;
 }

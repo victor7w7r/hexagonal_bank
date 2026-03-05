@@ -1,7 +1,8 @@
 package com.ntt.clients.infrastructure.out.messaging.entity;
 
-import java.time.LocalDate;
 import lombok.*;
+
+import java.time.LocalDate;
 
 @Builder
 @Getter
@@ -10,8 +11,8 @@ import lombok.*;
 @AllArgsConstructor
 public class StatusAccountSendReq {
 
-    private LocalDate startDate;
-    private LocalDate endDate;
-    private Long clientRef;
-    private String clientName;
+  private LocalDate startDate;
+  private LocalDate endDate;
+  private Long clientRef;
+  private String clientName;
 }

@@ -9,14 +9,14 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class TransactionConfig {
 
-    @Bean
-    public TransactionRepositoryPersistenceAdapter transactionPersistenceAdapter(
-        TransactionRepository transactionRepository,
-        TransactionPersistenceMapper transactionPersistenceMapper
-    ) {
-        return new TransactionRepositoryPersistenceAdapter(
-                transactionRepository,
-                transactionPersistenceMapper
-        );
-    }
+  @Bean
+  public TransactionRepositoryPersistenceAdapter transactionPersistenceAdapter(
+          TransactionRepository transactionRepository,
+          TransactionPersistenceMapper transactionPersistenceMapper
+  ) {
+    return new TransactionRepositoryPersistenceAdapter(
+            transactionRepository,
+            transactionPersistenceMapper
+    );
+  }
 }

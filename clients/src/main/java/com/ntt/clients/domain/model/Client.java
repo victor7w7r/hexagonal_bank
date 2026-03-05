@@ -9,13 +9,13 @@ import lombok.*;
 @AllArgsConstructor
 public class Client {
 
-    private Long id;
-    private String name;
-    private String gender;
-    private Integer age;
-    private String idNumber;
-    private String address;
-    private String phone;
-    private String password;
-    private Boolean status;
+  private Long id;
+  private String name;
+  private String gender;
+  private Integer age;
+  private String idNumber;
+  private String address;
+  private String phone;
+  private String password;
+  private Boolean status;
 }

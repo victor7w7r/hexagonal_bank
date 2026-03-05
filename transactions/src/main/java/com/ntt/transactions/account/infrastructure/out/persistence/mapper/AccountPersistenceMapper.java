@@ -2,25 +2,28 @@ package com.ntt.transactions.account.infrastructure.out.persistence.mapper;
 
 import com.ntt.transactions.account.domain.model.Account;
 import com.ntt.transactions.account.infrastructure.out.persistence.entity.AccountEntity;
-import java.util.List;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.MappingTarget;
 
+import java.util.List;
+
 @Mapper(componentModel = "spring")
 public interface AccountPersistenceMapper {
-    AccountEntity toAccountEntity(Account account);
-    Account toAccount(AccountEntity value);
-    List<Account> toAccountList(List<AccountEntity> accountEntities);
+  AccountEntity toAccountEntity(Account account);
 
-    @Mapping(target = "id", ignore = true)
-    @Mapping(target = "numAccount", ignore = true)
-    @Mapping(target = "clientRef", ignore = true)
-    void update(Account source, @MappingTarget AccountEntity target);
+  Account toAccount(AccountEntity value);
 
-    @Mapping(target = "numAccount", ignore = true)
-    void updateWithoutNumAccount(
-        Account source,
-        @MappingTarget AccountEntity target
-    );
+  List<Account> toAccountList(List<AccountEntity> accountEntities);
+
+  @Mapping(target = "id", ignore = true)
+  @Mapping(target = "numAccount", ignore = true)
+  @Mapping(target = "clientRef", ignore = true)
+  void update(Account source, @MappingTarget AccountEntity target);
+
+  @Mapping(target = "numAccount", ignore = true)
+  void updateWithoutNumAccount(
+          Account source,
+          @MappingTarget AccountEntity target
+  );
 }
