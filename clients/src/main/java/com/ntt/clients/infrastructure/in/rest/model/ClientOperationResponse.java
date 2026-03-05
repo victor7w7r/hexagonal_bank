@@ -8,7 +8,7 @@ import lombok.*;
 @EqualsAndHashCode
 @AllArgsConstructor
 @NoArgsConstructor
-public class ResponseInfo {
+public class ClientOperationResponse {
   private String status;
   private String message;
 }

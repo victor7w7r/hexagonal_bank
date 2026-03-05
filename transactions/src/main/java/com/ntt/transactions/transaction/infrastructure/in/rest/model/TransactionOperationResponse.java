@@ -1,4 +1,4 @@
-package com.ntt.transactions.account.infrastructure.in.rest.model;
+package com.ntt.transactions.transaction.infrastructure.in.rest.model;
 
 import lombok.*;
 
@@ -8,7 +8,7 @@ import lombok.*;
 @EqualsAndHashCode
 @AllArgsConstructor
 @NoArgsConstructor
-public class ResponseInfo {
+public class TransactionOperationResponse {
   private String status;
   private String message;
 }

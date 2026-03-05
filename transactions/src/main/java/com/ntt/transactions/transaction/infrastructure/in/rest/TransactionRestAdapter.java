@@ -1,13 +1,13 @@
 package com.ntt.transactions.transaction.infrastructure.in.rest;
 
-import com.ntt.transactions.account.infrastructure.in.rest.model.ResponseInfo;
+import com.ntt.transactions.account.infrastructure.in.rest.model.AccountOperationResponse;
 import com.ntt.transactions.transaction.application.port.in.TransactionUseCase;
 import com.ntt.transactions.transaction.infrastructure.in.rest.mapper.TransactionRestMapper;
 import com.ntt.transactions.transaction.infrastructure.in.rest.model.TransactionRequest;
 import com.ntt.transactions.transaction.infrastructure.in.rest.model.TransactionResponse;
 import jakarta.validation.Valid;
 import java.util.List;
-import java.util.Map;
+
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -32,7 +32,7 @@ public class TransactionRestAdapter {
     }
 
     @PostMapping("{numAccount}")
-    private ResponseEntity<ResponseInfo> saveTransaction(
+    private ResponseEntity<AccountOperationResponse> saveTransaction(
         @RequestBody @Valid TransactionRequest req,
         @PathVariable Long numAccount
     ) {
@@ -42,29 +42,29 @@ public class TransactionRestAdapter {
             numAccount
         );
         return ResponseEntity.status(201).body(
-              ResponseInfo.builder().status("status").message("Transaccion guardada exitosamente").build()
+              AccountOperationResponse.builder().status("status").message("Transaccion guardada exitosamente").build()
         );
     }
 
     @PutMapping
-    private ResponseEntity<ResponseInfo> updateTransaction(
+    private ResponseEntity<AccountOperationResponse> updateTransaction(
         @RequestBody @Valid TransactionRequest req
     ) {
       log.info("Updating transaction {}", req.getUuid());
         transactionUseCase.update(transactionRestMapper.toTransaction(req));
         return ResponseEntity.status(202).body(
-              ResponseInfo.builder().status("status").message("Transaccion actualizada exitosamente").build()
+              AccountOperationResponse.builder().status("status").message("Transaccion actualizada exitosamente").build()
         );
     }
 
     @DeleteMapping("{uuid}")
-    private ResponseEntity<ResponseInfo> deleteTransaction(
+    private ResponseEntity<AccountOperationResponse> deleteTransaction(
         @PathVariable String uuid
     ) {
       log.info("Deleting transaction {}", uuid);
         transactionUseCase.delete(uuid);
         return ResponseEntity.status(202).body(
-                ResponseInfo.builder().status("status").message("Transaccion eliminada exitosamente").build()
+                AccountOperationResponse.builder().status("status").message("Transaccion eliminada exitosamente").build()
         );
     }
 }

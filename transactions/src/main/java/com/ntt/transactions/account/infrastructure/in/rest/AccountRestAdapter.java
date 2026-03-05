@@ -4,10 +4,10 @@ import com.ntt.transactions.account.application.port.in.AccountUseCase;
 import com.ntt.transactions.account.infrastructure.in.rest.mapper.AccountRestMapper;
 import com.ntt.transactions.account.infrastructure.in.rest.model.AccountRequest;
 import com.ntt.transactions.account.infrastructure.in.rest.model.AccountResponse;
-import com.ntt.transactions.account.infrastructure.in.rest.model.ResponseInfo;
+import com.ntt.transactions.account.infrastructure.in.rest.model.AccountOperationResponse;
 import jakarta.validation.Valid;
 import java.util.List;
-import java.util.Map;
+
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -31,36 +31,36 @@ public class AccountRestAdapter {
     }
 
     @PostMapping("{idNumber}")
-    private ResponseEntity<ResponseInfo> saveAccount(
+    private ResponseEntity<AccountOperationResponse> saveAccount(
         @Valid @RequestBody AccountRequest request,
         @PathVariable String idNumber
     ) {
       log.info("Creating account {}", request.getNumAccount());
       accountUseCase.save(accountRestMapper.toAccount(request), idNumber);
         return ResponseEntity.status(201).body(
-              ResponseInfo.builder().status("status").message("Cuenta guardado exitosamente").build()
+              AccountOperationResponse.builder().status("status").message("Cuenta guardado exitosamente").build()
         );
     }
 
     @PutMapping
-    private ResponseEntity<ResponseInfo> updateAccount(
+    private ResponseEntity<AccountOperationResponse> updateAccount(
         @Valid @RequestBody AccountRequest request
     ) {
         log.info("Updating account {}", request.getNumAccount());
         accountUseCase.update(accountRestMapper.toAccount(request));
         return ResponseEntity.status(202).body(
-              ResponseInfo.builder().status("status").message("Cuenta actualizada exitosamente").build()
+              AccountOperationResponse.builder().status("status").message("Cuenta actualizada exitosamente").build()
         );
     }
 
     @DeleteMapping("{numAccount}")
-    private ResponseEntity<ResponseInfo> deleteAccount(
+    private ResponseEntity<AccountOperationResponse> deleteAccount(
         @PathVariable Long numAccount
     ) {
       log.info("Deleting account {}", numAccount);
       accountUseCase.delete(numAccount);
         return ResponseEntity.status(202).body(
-              ResponseInfo.builder().status("status").message("Cliente eliminada exitosamente").build()
+              AccountOperationResponse.builder().status("status").message("Cliente eliminada exitosamente").build()
         );
     }
 }

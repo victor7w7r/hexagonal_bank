@@ -25,9 +25,8 @@ public class AccountEntity {
     private Boolean status;
     private Long clientRef;
 
-    //TODO: Change to LAZY
     @OneToMany(
-        fetch = FetchType.EAGER,
+        fetch = FetchType.LAZY,
         cascade = CascadeType.REMOVE,
         orphanRemoval = true
     )

@@ -5,7 +5,7 @@ import com.ntt.clients.application.port.in.ClientSearchUseCase;
 import com.ntt.clients.infrastructure.in.rest.mapper.ClientRestMapper;
 import com.ntt.clients.infrastructure.in.rest.model.ClientRequest;
 import com.ntt.clients.infrastructure.in.rest.model.ClientResponse;
-import com.ntt.clients.infrastructure.in.rest.model.ResponseInfo;
+import com.ntt.clients.infrastructure.in.rest.model.ClientOperationResponse;
 import com.ntt.clients.infrastructure.in.rest.model.StatusAccountReceiveRes;
 import jakarta.validation.Valid;
 import java.time.LocalDate;
@@ -52,33 +52,33 @@ public class ClientRestAdapter {
   }
 
   @PostMapping
-  public ResponseEntity<ResponseInfo> saveClient(
+  public ResponseEntity<ClientOperationResponse> saveClient(
           @Valid @RequestBody ClientRequest request
   ) {
     log.info("Creating client {}", request.getName());
     clientCreateUseCase.save(clientRestMapper.toClient(request));
     return ResponseEntity.status(201).body(
-        ResponseInfo.builder().status("status").message("Cliente guardado exitosamente").build()
+        ClientOperationResponse.builder().status("status").message("Cliente guardado exitosamente").build()
     );
   }
 
   @PutMapping
-  public ResponseEntity<ResponseInfo> updateClient(
+  public ResponseEntity<ClientOperationResponse> updateClient(
           @Valid @RequestBody ClientRequest request
   ) {
     log.info("Updating client {}", request.getIdNumber());
     clientCreateUseCase.update(clientRestMapper.toClient(request));
     return ResponseEntity.status(202).body(
-            ResponseInfo.builder().status("status").message("Cliente actualizado exitosamente").build()
+            ClientOperationResponse.builder().status("status").message("Cliente actualizado exitosamente").build()
     );
   }
 
   @DeleteMapping("{id}")
-  public ResponseEntity<ResponseInfo> deleteClient(@PathVariable String id) {
+  public ResponseEntity<ClientOperationResponse> deleteClient(@PathVariable String id) {
     log.info("Deleting client {}", id);
     clientCreateUseCase.delete(id);
     return ResponseEntity.status(202).body(
-        ResponseInfo.builder().status("status").message("Cliente eliminado exitosamente").build()
+        ClientOperationResponse.builder().status("status").message("Cliente eliminado exitosamente").build()
     );
   }
 }
