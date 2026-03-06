@@ -10,6 +10,7 @@ import com.ntt.transactions.account.infrastructure.in.rest.model.AccountRequest;
 import com.ntt.transactions.account.infrastructure.in.rest.model.AccountResponse;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.ResponseEntity;
@@ -17,13 +18,13 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@CrossOrigin("*")
 @RestController
+@CrossOrigin("*")
+@Slf4j
 @RequestMapping("/api/v1/accounts")
 @RequiredArgsConstructor
 public class AccountRestAdapter {
 
-  private static final Logger log = LoggerFactory.getLogger(AccountRestAdapter.class);
   private final AccountSearchUseCase accountSearchUseCase;
   private final AccountCreateUseCase accountCreateUseCase;
   private final AccountUpdateUseCase accountUpdateUseCase;

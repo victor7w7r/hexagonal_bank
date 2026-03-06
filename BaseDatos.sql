@@ -5,8 +5,6 @@
 -- Dumped from database version 17.5
 -- Dumped by pg_dump version 17.5
 
--- Started on 2025-08-04 01:11:01 UTC
-
 SET statement_timeout = 0;
 SET lock_timeout = 0;
 SET idle_in_transaction_session_timeout = 0;
@@ -25,8 +23,6 @@ SET row_security = off;
 --
 
 CREATE DATABASE ntt_bank WITH TEMPLATE = template0 ENCODING = 'UTF8' LOCALE_PROVIDER = libc LOCALE = 'en_US.utf8';
-
-
 ALTER DATABASE ntt_bank OWNER TO postgres;
 
 \connect ntt_bank
@@ -58,7 +54,6 @@ CREATE TABLE public.client (
     status boolean,
     id bigint NOT NULL
 );
-
 
 ALTER TABLE public.client OWNER TO postgres;
 
@@ -139,7 +134,7 @@ CREATE TABLE public.person (
     gender character varying(255),
     idNumber character varying(255),
     name character varying(255),
-    phne character varying(255)
+    phone character varying(255)
 );
 
 
@@ -222,7 +217,6 @@ INSERT INTO public.transaction VALUES (27, '2025-08-11', 750.00, 'Retiro', 'f778
 INSERT INTO public.person VALUES (2, 'Amazonas y NNUU', 30, 'masculino', '1725082786', 'Victor Jimenez', '0984565509');
 INSERT INTO public.person VALUES (3, 'Jorge Ramirez y Mario Rodas', 22, 'masculino', '11124458974', 'Juan Coello', '2221445789');
 INSERT INTO public.person VALUES (4, 'Camila Arteaga y José Peralta', 33, 'femenino', '11144556323', 'Sabrina Davila', '6667779546');
-
 
 --
 -- TOC entry 3459 (class 0 OID 0)

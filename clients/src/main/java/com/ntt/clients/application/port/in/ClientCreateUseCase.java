@@ -1,7 +1,0 @@
-package com.ntt.clients.application.port.in;
-
-import com.ntt.clients.domain.model.Client;
-
-public interface ClientCreateUseCase {
-  void save(Client client);
-}

@@ -10,6 +10,7 @@ import com.ntt.transactions.transaction.infrastructure.in.rest.model.Transaction
 import com.ntt.transactions.transaction.infrastructure.in.rest.model.TransactionResponse;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.ResponseEntity;
@@ -19,11 +20,11 @@ import java.util.List;
 
 @CrossOrigin("*")
 @RestController
+@Slf4j
 @RequestMapping("/api/v1/transactions")
 @RequiredArgsConstructor
 public class TransactionRestAdapter {
 
-  private static final Logger log = LoggerFactory.getLogger(TransactionRestAdapter.class);
   private final TransactionRestMapper transactionRestMapper;
   private final TransactionSearchUseCase transactionSearchUseCase;
   private final TransactionCreateUseCase transactionCreateUseCase;
